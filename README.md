@@ -107,6 +107,7 @@ sudo python3 leek_messenger.py
   1. **Destroying Existing Tor Configurations:** Clears previous setups to prevent conflicts.
   2. **Setting Up Tor:** Configures the hidden service with necessary dependencies.
   3. **Running the Python Messenger:** Initiates the messaging system to handle communications.
+---
 
 ```plaintext
  __        __   __             __   
