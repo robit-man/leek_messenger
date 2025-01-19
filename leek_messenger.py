@@ -1,11 +1,48 @@
 #!/usr/bin/env python3
+import os
+import sys
+
+# --- Auto Virtual Environment Setup ---
+# If we're not running inside a virtual environment, create one,
+# install dependencies, and then re-launch this script.
+if sys.prefix == sys.base_prefix:
+    import subprocess
+    import venv
+
+    # Define path to the virtual environment directory (relative to this file)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    venv_dir = os.path.join(current_dir, 'venv')
+
+    # Create the venv if it doesn't exist
+    if not os.path.exists(venv_dir):
+        print("Creating virtual environment...")
+        venv.create(venv_dir, with_pip=True)
+
+    # Determine paths to the virtual environment's executables
+    if os.name == 'nt':
+        python_executable = os.path.join(venv_dir, 'Scripts', 'python.exe')
+        pip_executable = os.path.join(venv_dir, 'Scripts', 'pip.exe')
+    else:
+        python_executable = os.path.join(venv_dir, 'bin', 'python')
+        pip_executable = os.path.join(venv_dir, 'bin', 'pip')
+
+    # Upgrade pip and install required packages
+    print("Installing required packages (PySocks, requests)...")
+    subprocess.check_call([pip_executable, 'install', '--upgrade', 'pip'])
+    subprocess.check_call([pip_executable, 'install', 'PySocks', 'requests'])
+
+    # Relaunch the script using the virtual environment's Python interpreter
+    print("Restarting script inside the virtual environment...")
+    os.execv(python_executable, [python_executable] + sys.argv)
+
+# Now we are running inside the virtual environment.
+# --- End of Auto Virtual Environment Setup ---
 
 import threading
 import time
 import requests
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import sys
-import os
 import json
 from datetime import datetime
 import logging
@@ -207,7 +244,7 @@ def main():
     choice = input("Choose message sending mode:\n1. Automatic (send every second)\n2. Manual (send custom messages)\nEnter 1 or 2: ").strip()
     
     if choice == '1':
-        # Start sending messages to the remote onion address
+        # Start sending messages to the remote onion address automatically
         send_messages(remote_onion_address, local_onion_address)
     elif choice == '2':
         # Start sending custom messages based on user input
