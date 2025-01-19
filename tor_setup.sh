@@ -142,7 +142,7 @@ verify_local_service() {
 # Main function
 main() {
     log_message "Starting Tor setup script..."
-
+    sudo pip3 install pysocks
     install_tor
     setup_hidden_service
     backup_torrc
