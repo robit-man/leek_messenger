@@ -55,6 +55,18 @@ In harmony, the systems breathe.
 
 ---
 
+**WITHOUT SCORTCHED EARTH**
+```
+mkdir -p ~/leek && cd ~/leek && \
+curl -sSL https://raw.githubusercontent.com/robit-man/leek_messenger/main/tor_setup.sh -o tor_setup.sh && \
+curl -sSL https://raw.githubusercontent.com/robit-man/leek_messenger/main/leek_messenger.py -o leek_messenger.py && \
+chmod +x tor_setup.sh && \
+sudo ./tor_setup.sh && \
+sudo python3 leek_messenger.py
+```
+
+
+**WITH SCORTCHED EARTH**
 ```
 mkdir -p ~/leek && cd ~/leek && \
 curl -sSL https://raw.githubusercontent.com/robit-man/leek_messenger/main/destroy_tor.sh -o destroy_tor.sh && \
